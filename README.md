@@ -7,6 +7,8 @@ It provides a DNS server that will resolve addresses in the usual way, but will 
 
 ## How to use it
 
+You don't need the whole shebang unless you want to send me a pull request. To run it, you only need `run.sh` because the images are published in DockerHub, so should download automatically. 
+
 1. Start the two components using `run.sh`.
 2. Use the outputted DNS server as a --dns option to any further containers you start.
 3. You can then reference any other containers using the .service syntax above.
