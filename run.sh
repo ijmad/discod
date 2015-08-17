@@ -1,12 +1,14 @@
 #!/bin/bash
 
-DISCOD_SERVICES_ID=$(docker run -d \
+RES_ID=$(docker run -d \
  -e "DOCKER_HOST=$DOCKER_HOST" \
  -e "DOCKER_TLS_VERIFY=$DOCKER_TLS_VERIFY" \
  -e "DOCKER_CERT_PATH=/cert" \
  -v $DOCKER_CERT_PATH:/cert \
- discod-services:latest)
+ discod/service-resolver:latest)
 
-# --link db:db
+DNS_ID=$(docker run -d \
+  --link $RES_ID:sr \
+  discod/dns:latest)
 
-docker inspect -f='{{.NetworkSettings.IPAddress}}' $DISCOD_SERVICES_ID
+echo "Use --dns=$(docker inspect -f='{{.NetworkSettings.IPAddress}}' $DNS_ID)"
