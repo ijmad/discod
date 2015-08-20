@@ -12,7 +12,7 @@ else
   fi
   
   if [ -x "$B2D" ] ; then
-    $(boot2docker shellinit)
+    $($B2D shellinit)
   fi
   
   if [ ! -z "$DOCKER_HOST" ] && [ ! -z "$DOCKER_CERT_PATH" ] && [ -d "$DOCKER_CERT_PATH" ]; then
