@@ -28,8 +28,4 @@ Docker provides a linking mechanism that achieves similar things, but you can't 
 
 ## Quick note on inner workings
 
-The service resolver does a trick to enable it to access the host machine's Docker via its remote API. This involves forwarding environment variables and mounting two volumes (although only one is necessary depending on whether you're using a UNIX socket or TCP-based socket to talk to docker). 
-
-I have not exhaustively tested this yet on docker installs using unix sockets, so be careful.
-
-One consequence of the way this works is that if you happen to be using something like `boot2docker`, you need to run `$(boot2docker shellinit)` before the `run.sh` script because these environment variables need to be defined.
+The service resolver does a trick to enable it to access the host machine's Docker via its remote API. This involves forwarding environment variables and mounting volumes. run.sh should be able to figure out how to talk to docker, but this has not been exhaustively tested.
