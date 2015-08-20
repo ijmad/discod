@@ -10,11 +10,20 @@ Please feel free to send me pull requests.
 
 ## How to use it
 
-You don't need the whole shebang unless you want to send me a pull request. To run it, you only need `run.sh` because the images are published in `DockerHub`, so should download automatically. 
+You don't need to checkout whole shebang unless you want to send me a pull request. To run it, you only need `run.sh` because the images are published in `DockerHub`, so should download automatically. 
 
-1. Start the two components using `run.sh`.
-2. Use the outputted DNS server as a `--dns` option to any further containers you start.
-3. You can then reference any other containers using the `.service` syntax above.
+So try this:
+
+```
+curl -L https://raw.githubusercontent.com/ijmad/discod/master/discod-start.sh > ./discod-start.sh
+chmod +x ./discod-start.sh
+```
+
+1. Start discod by issuing the command `./discod-start.sh`.
+2. This in turn starts two docker containers.
+3. Use the outputted DNS server as a `--dns` option to any further containers you start.
+
+Inside a container, you can then reference any other container using the `.service` syntax above. By default, container names are not predictable, but you can make them so by always doing `docker run --name foo <container>`. Things like `docker-compose` name containers fairly consistently anyway, although I may eventually add support for finding containers by image name too.
 
 For example:
 
