@@ -5,4 +5,4 @@ ADD target/discod-service-resolver.jar /app/
 WORKDIR /app
 
 EXPOSE 53
-CMD java -jar discod-service-resolver.jar 53 service
+CMD java -jar discod-service-resolver.jar 53 image container

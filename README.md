@@ -1,7 +1,13 @@
 # discod
-Lightweight DNS-based service discovery for docker-based development environments. An improvement on the functionality built in to docker because it's *live*, i.e. it doesn't need machines to pick up changes to `/etc/hosts` or `/etc/resolv.conf` or be restarted, because this is being done inside the DNS server. Plus eventually, I plan to add some features to set it apart from the default networking docker provides.
+Lightweight DNS-based service discovery for docker-based development environments. An improvement on the functionality built in to docker because it's *live*, i.e. it doesn't need machines to pick up changes to `/etc/hosts` or `/etc/resolv.conf` or be restarted, because this is being done inside the DNS server.
 
-The DNS server that will resolve addresses in the usual way, but will also resolve anything with a `.service` domain to the current set of running docker images, either by its container ID (e.g. `b0466da37f60.service`) or name (e.g. `nostalgic_turing.service`), returning their internal network address (usually in the `172.17.x.x` range). Running docker containers are able to communicate with eachother freely on these addresses to ports they expose. This is similar to the automatically added `.bridge` addresses docker provides anyway, but because this is operating via DNS, with a TTL of 1ms, the requests should be fresh and up-to-date all the time, as long as consumers respect DNS caching.
+The DNS server that will resolve addresses in the usual way, but will also resolve anything with a `.container` domain to the current set of running docker containers, either by its container ID (e.g. `b0466da37f60.container`) or name (e.g. `nostalgic_turing.container`), returning their internal network address (usually in the `172.17.x.x` range).
+
+Additionally, any request to a `.image` domain will be resolved by looking at the current set of running containers and the images used to run them, and will balance any requests across running instances of the image. For example, `ubuntu.image` or `microservice.image`. This also lets you bind more loosely in various scenarios than addressing containers specifically which can be a little unpredictable.
+
+Running docker containers are able to communicate with eachother freely once they have an IP addresse to any ports they have exposed.
+
+Docker adds `.bridge` addresses automatically, but because this is operating via DNS, with a minimum TTL, the requests should be fresh and up-to-date all the time, as long as consumers respect DNS caching, rather than having to wait for changes in `/etc/hosts` to be picked up
 
 This is most certainly not production-quality.
 Please feel free to send me pull requests.

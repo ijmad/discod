@@ -10,12 +10,18 @@ import java.util.Optional;
 public class Main {
     public static void main(String[] args) throws Exception {
         int port = Integer.parseInt(args[0]);
-        String domain = "." + args[1] + ".";
+        String imageDomain = "." + args[1] + ".";
+        String containerDomain = "." + args[2] + ".";
 
         DNSResponder responder = new DNSResponder(
             (name) -> {
-                if (name.endsWith(domain) && name.length() > domain.length()) {
-                    Optional<InetAddress> ip = findDockerIpByName(name.substring(0, name.length() - domain.length()));
+                if (name.endsWith(imageDomain) && name.length() > imageDomain.length()) {
+                    Optional<InetAddress> ip = findByImageName(name.substring(0, name.length() - imageDomain.length()));
+                    System.out.println(name + " -> " + ip);
+                    return ip;
+                }
+                else if (name.endsWith(containerDomain) && name.length() > containerDomain.length()) {
+                    Optional<InetAddress> ip = findByContainerName(name.substring(0, name.length() - imageDomain.length()));
                     System.out.println(name + " -> " + ip);
                     return ip;
                 }
@@ -33,11 +39,22 @@ public class Main {
         server.serve();
     }
 
-    private static Optional<InetAddress> findDockerIpByName(String name) {
+    private static Optional<InetAddress> findByContainerName(String containerName) {
         try {
-            return DockerIntrospection.findIpByContainer(name);
+            return DockerIntrospection.findIpByContainer(containerName);
         }
         catch (DockerException | InterruptedException e) {
+            e.printStackTrace();
+            return Optional.empty();
+        }
+    }
+
+    private static Optional<InetAddress> findByImageName(String imageName) {
+        try {
+            return DockerIntrospection.findIpByImage(imageName);
+        }
+        catch (DockerException | InterruptedException e) {
+            e.printStackTrace();
             return Optional.empty();
         }
     }
