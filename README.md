@@ -1,9 +1,7 @@
 # discod
 Lightweight DNS-based service discovery for docker-based development environments. An improvement on the functionality built in to docker because it's *live*, i.e. it doesn't need machines to pick up changes to `/etc/hosts` or `/etc/resolv.conf` or be restarted, because this is being done inside the DNS server. Plus eventually, I plan to add some features to set it apart from the default networking docker provides.
 
-## What is this thing
-
-It provides a DNS server that will resolve addresses in the usual way, but will also resolve anything with a `.service` domain to the current set of running docker images, either by its container ID (e.g. `b0466da37f60.service`) or name (e.g. `nostalgic_turing.service`), returning their internal network address (usually in the `172.17.x.x` range). Running docker containers are able to communicate with eachother freely on these addresses to ports they expose.
+The DNS server that will resolve addresses in the usual way, but will also resolve anything with a `.service` domain to the current set of running docker images, either by its container ID (e.g. `b0466da37f60.service`) or name (e.g. `nostalgic_turing.service`), returning their internal network address (usually in the `172.17.x.x` range). Running docker containers are able to communicate with eachother freely on these addresses to ports they expose. This is similar to the automatically added `.bridge` addresses docker provides anyway, but because this is operating via DNS, with a TTL of 1ms, the requests should be fresh and up-to-date all the time, as long as consumers respect DNS caching.
 
 This is most certainly not production-quality.
 Please feel free to send me pull requests.
