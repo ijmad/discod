@@ -1,5 +1,5 @@
 # discod
-Lightweight DNS-based service discovery for docker-based development environments
+Lightweight DNS-based service discovery for docker-based development environments. An improvement on the functionality built in to docker because it's *live*, i.e. it doesn't need machines to pick up changes to `/etc/hosts` or `/etc/resolv.conf` or be restarted, because this is being done inside the DNS server. Plus eventually, I plan to add some features to set it apart from the default networking docker provides.
 
 ## What is this thing
 
@@ -10,7 +10,7 @@ Please feel free to send me pull requests.
 
 ## How to use it
 
-You don't need to checkout whole shebang unless you want to send me a pull request. To run it, you only need `run.sh` because the images are published in `DockerHub`, so should download automatically. 
+You don't need to checkout whole shebang unless you want to send me a pull request. To run it, you only need `discod-start.sh` because the images are published in `DockerHub`, so should download automatically. 
 
 So try this:
 
@@ -37,4 +37,4 @@ Docker provides a linking mechanism that achieves similar things, but you can't 
 
 ## Quick note on inner workings
 
-The service resolver does a trick to enable it to access the host machine's Docker via its remote API. This involves forwarding environment variables and mounting volumes. run.sh should be able to figure out how to talk to docker, but this has not been exhaustively tested.
+The service resolver does a trick to enable it to access the host machine's Docker via its remote API. This involves forwarding environment variables and mounting volumes. `discod-start.sh` should be able to figure out how to talk to docker, but this has not been exhaustively tested.
