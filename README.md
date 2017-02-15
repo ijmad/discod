@@ -1,3 +1,5 @@
+**Please note that as of 2017, this is vastly out of date and unmaintained, and is not useful on newer versions of docker with the new networking options**
+
 # discod
 Lightweight DNS-based service discovery for docker-based development environments. An improvement on the functionality built in to docker because it's *live*, i.e. it doesn't need machines to pick up changes to `/etc/hosts` or `/etc/resolv.conf` or be restarted, because this is being done inside the DNS server.
 
